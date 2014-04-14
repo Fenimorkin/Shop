@@ -1,5 +1,18 @@
 <?php
- abstract class Product
+//ИНТЕРФЕЙС при написании интерфейса пишеться ведущая буква I
+
+require 'iproduct.php';
+
+/* Наследуя интерфейс IProduct класс Product обязуеться реализовать сам
+   или в своих наследниках описаные функции из интерфейса
+   Зная этот  интерфейс стороняя организация может разработать класс для своей 
+   продукции   
+*/ 
+
+//Добавляем класс продуктов которы будут наследовать и функц. которого будут 
+//переопределяться
+
+ abstract class Product implements IProduct
  {
  	protected $pid;
  	protected $name;
@@ -24,7 +37,7 @@
  	
  	}
  	
- //SubClass must impliment these!
+ //Наследующие классы должные в себе реализовать данные функции
  
  abstract public function get_number_in_stock($in_num_desired);
  abstract public function ship_product_units($in_num_shipped);
@@ -51,6 +64,8 @@
  
  }
  
+ //LocalProduct наследует класс Product осуществляет доступ к локальной БД mySQL
+ 
  class LocalProduct extends Product
  {
  	public function get_number_in_stock($in_num_desired)
@@ -65,6 +80,9 @@
  		//longer available. TRUE == success, FALSE == failure
  	}
  }
+ 
+ //NavigationPartnerProduct наследует класс Product осуществляет доступ к БД 
+ //партнеров PostgreSQL
  
  class NavigationPartnerProduct extends  Product
  {
